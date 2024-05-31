@@ -32,36 +32,25 @@ namespace BananaUtils.OnScreenDebugger.Scripts
 
         private void Awake() => _instance = GetComponent<OSDebug>();
 
-        public void Log(float messageTimeOnScreen, params object[] message)
+        public static void Log(params object[] message) => Log(5f, message);
+        public static void LogWarning(params object[] message) => LogWarning(5f, message);
+        public static void LogError(params object[] message) => LogError(5f, message);
+
+        public static void Log(float messageTimeOnScreen, params object[] message) => 
+            LogMessage(messageTimeOnScreen, Color.white, 18, message);
+
+        public static void LogWarning(float messageTimeOnScreen, params object[] message) => 
+            LogMessage(messageTimeOnScreen, Color.yellow, 18, message);
+
+        public static void LogError(float messageTimeOnScreen, params object[] message) => 
+            LogMessage(messageTimeOnScreen, Color.red, 18, message);
+
+        public static void LogMessage(float messageTimeOnScreen, Color32 color, float fontSize, params object[] message)
         {
             var debugMessage = 
-                Instantiate(_debugMessage, _debugMessages.transform);
-            debugMessage.GetComponent<DebugMessageScript>().AssignValues(string.Join("", message), Color.white, messageTimeOnScreen, 18);
-            debugMessage.transform.SetParent(_debugMessages.transform);
-        }
-
-        public void LogWarning(float messageTimeOnScreen, params object[] message)
-        {
-            var debugMessage =
-                Instantiate(_debugMessage, _debugMessages.transform);
-            debugMessage.GetComponent<DebugMessageScript>().AssignValues(string.Join("", message), Color.yellow, messageTimeOnScreen, 18);
-            debugMessage.transform.SetParent(_debugMessages.transform);
-        }
-
-        public void LogError(float messageTimeOnScreen, params object[] message)
-        {
-            var debugMessage = 
-                Instantiate(_debugMessage, _debugMessages.transform);
-            debugMessage.GetComponent<DebugMessageScript>().AssignValues(string.Join("", message), Color.red, messageTimeOnScreen, 18);
-            debugMessage.transform.SetParent(_debugMessages.transform);
-        }
-
-        public void LogCustom(float messageTimeOnScreen, Color32 color, float fontSize, params object[] message)
-        {
-            var debugMessage = 
-                Instantiate(_debugMessage, _debugMessages.transform);
+                Instantiate(Debug._debugMessage, Debug._debugMessages.transform);
             debugMessage.GetComponent<DebugMessageScript>().AssignValues(string.Join("", message), color, messageTimeOnScreen, fontSize);
-            debugMessage.transform.SetParent(_debugMessages.transform);
+            debugMessage.transform.SetParent(Debug._debugMessages.transform);
         }
     }
 }

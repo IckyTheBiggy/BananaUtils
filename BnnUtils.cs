@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace BNNUtils
@@ -21,6 +22,19 @@ namespace BNNUtils
             }
 
             return currentParent.gameObject;
+        }
+
+        public static string GenerateRandomID(int length)
+        {
+            StringBuilder builder = new StringBuilder();
+
+            for (int i = 0; i < length; i++)
+            {
+                int id = Random.Range(0, 9);
+                builder.Append(id);
+            }
+
+            return builder.ToString();
         }
     }
 }
